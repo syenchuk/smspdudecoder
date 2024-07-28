@@ -127,7 +127,7 @@ class Number:
         '0123456789'
         """
         data = swap_nibbles(data)
-        if data[-1:] == 'F':
+        if data[-1:] == 'F' or data[-1:] == 'f':
             data = data[:-1]
         return data
 
