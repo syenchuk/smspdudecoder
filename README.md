@@ -56,7 +56,7 @@ If you execute this example, the `sms_data` variable will contain a dictionary w
     'udhi': False,
     'sri': False,
     'lp': False,
-    'mms': True,
+    'mms': False,
     'mti': 'deliver'
   },
   'sender': {

@@ -111,7 +111,7 @@ class PDUHeader:
         Decodes an incomming PDU header.
 
         >>> PDUHeader.decode(StringIO('44'))
-        {'rp': False, 'udhi': True, 'sri': False, 'lp': False, 'mms': True, 'mti': 'deliver'}
+        {'rp': False, 'udhi': True, 'sri': False, 'lp': False, 'mms': False, 'mti': 'deliver'}
         """
         result = dict()
         io_data = BitStream(hex=pdu_data.read(2))
@@ -124,7 +124,7 @@ class PDUHeader:
         # Loop Prevention
         result['lp'] = io_data.read('bool')
         # More Messages to Send
-        result['mms'] = io_data.read('bool')
+        result['mms'] = not io_data.read('bool')
         # Message Type Indicator
         result['mti'] = cls.MTI.get(io_data.read('bits:2').uint)
         if result['mti'] is None:
