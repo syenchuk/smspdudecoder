@@ -31,8 +31,8 @@ def read_incoming_sms(data: str) -> Dict[str, Any]:
                     'part_number': el_data['part_number'],
                 }
     return {
-        'sender': sender,
         'date': date,
+        'sender': sender,
         'content': content,
         'partial': partial,
     }
