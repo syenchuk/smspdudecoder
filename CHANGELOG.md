@@ -1,5 +1,10 @@
 # Release notes
 
+## 2.1.1 (2025-01-21)
+
+- Added tests for Python 3.7 up to 3.12
+- Fixed bug with lowercase hex strings
+
 ## 2.1.0 (2023-04-12)
 
 - Added basic support for SMS-SUBMIT messages

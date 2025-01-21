@@ -8,7 +8,7 @@ with open("README.md", "r") as fh:
 if __name__ == '__main__':
     setup(
         name='smspdudecoder',
-        version='2.1.0',
+        version='2.1.1',
         url='https://github.com/qotto/smspdudecoder',
         license='MIT',
         author='Alexandre Syenchuk',
@@ -33,5 +33,7 @@ if __name__ == '__main__':
             'Programming Language :: Python :: 3.8',
             'Programming Language :: Python :: 3.9',
             'Programming Language :: Python :: 3.10',
+            'Programming Language :: Python :: 3.11',
+            'Programming Language :: Python :: 3.12',
         ],
     )
