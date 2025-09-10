@@ -1,5 +1,11 @@
 # Release notes
 
+## 2.2.0 (2025-09-10)
+
+- Added robust handling for truncated UCS-2 PDUs.
+- The library now logs a warning and returns an ellipsis at the end of the decoded string to indicate that the data was incomplete.
+- The decoded result now contains a `warning` field when a truncation occurs.
+
 ## 2.1.1 (2025-01-21)
 
 - Added tests for Python 3.7 up to 3.12
