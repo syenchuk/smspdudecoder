@@ -32,7 +32,7 @@ requirements:
 	pip freeze|sed -e 's%\(.*/[a-z]*\.git\)@[0-9a-f]*\(#.*\)%\1\2%' > requirements.txt
 
 test:
-	python setup.py test
+	python -m unittest discover tests
 
 docker-test:
 	docker build -f test.Dockerfile -t ${NAME}-test .
