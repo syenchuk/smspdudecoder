@@ -9,6 +9,10 @@ Unlike elements, fields represent independent datagram chunks, and are decoded f
 Fields may contain one or multiple elements.
 """
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 from .codecs import GSM
 from .codecs import UCS2
 from .elements import Date
@@ -237,6 +241,7 @@ class UserData:
         length = int(pdu_data.read(2), 16)
         pdu_start = pdu_data.tell()
         header, header_length = None, 0
+        warning = None
         if ctx['header']['udhi']:
             header = UserDataHeader.decode(pdu_data)
             header_length = header['length'] + 1
@@ -251,13 +256,27 @@ class UserData:
             data_length_bytes = int(data_length_bits / 8) + (1 if data_length_bits % 8 else 0)
             data = GSM.decode(pdu_data.read(2*data_length_bytes))[header_length_septets:length]
         elif ctx['dcs']['encoding'] == 'ucs2':
-            data = UCS2.decode(pdu_data.read(2*(length-header_length)))
+            expected_hex_len = 2 * (length - header_length)
+            hex_data = pdu_data.read(expected_hex_len)
+
+            is_truncated = len(hex_data) < expected_hex_len
+
+            if is_truncated:
+                warning = "Truncated PDU: User data is shorter than specified by UDL."
+                logger.warning(warning)
+
+                # Truncates to the last full character
+                trunc_len = len(hex_data) - (len(hex_data) % 4)
+                data = UCS2.decode(hex_data[:trunc_len]) + '…'
+            else:
+                data = UCS2.decode(hex_data)
         else:
             raise AssertionError("Non-recognized encoding")
-        return {
-            'header': header,
-            'data': data,
-        }
+
+        result = {'header': header, 'data': data}
+        if warning:
+            result['warning'] = warning
+        return result
 
 
 class SMSDeliver:

@@ -185,6 +185,4 @@ class UCS2:
         >>> UCS2.decode('004C006F00720065006D00200049007000730075006D')
         'Lorem Ipsum'
         """
-        if len(data) % 4 != 0:
-            data += '0' * (4 - (len(data) % 4))
         return unhexlify(data).decode('utf-16be')
